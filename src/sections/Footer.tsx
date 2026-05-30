@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import Link from 'next/link'
 import { useLanguage } from '../contexts/LanguageContext'
 
 export default function Footer() {
@@ -64,7 +64,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               <li>
                 <Link
-                  to="/privacy"
+                  href="/privacy"
                   className="transition-colors duration-200 hover:text-[#fafaf8]"
                   style={{
                     fontFamily: "'Geist Mono', monospace",
@@ -78,7 +78,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  to="/terms"
+                  href="/terms"
                   className="transition-colors duration-200 hover:text-[#fafaf8]"
                   style={{
                     fontFamily: "'Geist Mono', monospace",
@@ -216,7 +216,7 @@ export default function Footer() {
           >
             &copy; {t('footer.copyright')}
           </span>
-          <div className="flex gap-3">
+          <div className="flex items-center gap-3">
             {socials.map((social) => (
               <a
                 key={social.name}

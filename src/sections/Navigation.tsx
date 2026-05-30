@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useLanguage } from '../contexts/LanguageContext'
 
 const getNavLinks = (t: (k: string) => string) => [
@@ -13,7 +14,7 @@ const getNavLinks = (t: (k: string) => string) => [
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { lang, setLang, t } = useLanguage()
-  const location = useLocation()
+  const router = useRouter()
   const navLinks = getNavLinks(t)
 
   const toggleLang = () => setLang(lang === 'en' ? 'ko' : 'en')
@@ -30,7 +31,7 @@ export default function Navigation() {
     >
       <div className="content-max h-full flex items-center justify-between px-6">
         <Link
-          to="/"
+          href="/"
           className="hover:opacity-70 transition-opacity flex items-center"
         >
           <img src="/brand-logo.png" alt="ClearlyVitamins" style={{ height: 32 }} />
@@ -41,15 +42,15 @@ export default function Navigation() {
           {navLinks.map((link) => (
             <Link
               key={link.path}
-              to={link.path}
+              href={link.path}
               className="text-[13px] font-medium transition-colors duration-200 relative py-1"
               style={{
                 fontFamily: "'Geist Sans', sans-serif",
-                color: location.pathname === link.path ? '#1a1a1a' : '#4a4a4a',
+                color: router.pathname === link.path ? '#1a1a1a' : '#4a4a4a',
               }}
             >
               {link.label}
-              {location.pathname === link.path && (
+              {router.pathname === link.path && (
                 <span className="absolute -bottom-0.5 left-0 w-full h-[2px] rounded-full bg-[#1a1a1a]" />
               )}
             </Link>
@@ -105,12 +106,12 @@ export default function Navigation() {
           {navLinks.map((link) => (
             <Link
               key={link.path}
-              to={link.path}
+              href={link.path}
               className="py-3 px-4 rounded-lg text-[15px] font-medium transition-colors"
               style={{
                 fontFamily: "'Geist Sans', sans-serif",
-                color: location.pathname === link.path ? '#1a1a1a' : '#4a4a4a',
-                background: location.pathname === link.path ? 'rgba(0,0,0,0.04)' : 'transparent',
+                color: router.pathname === link.path ? '#1a1a1a' : '#4a4a4a',
+                background: router.pathname === link.path ? 'rgba(0,0,0,0.04)' : 'transparent',
               }}
             >
               {link.label}

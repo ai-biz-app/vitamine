@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 
 export type Lang = 'en' | 'ko'
 
@@ -11,10 +11,14 @@ interface LanguageContextValue {
 const LanguageContext = createContext<LanguageContextValue | null>(null)
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(() => {
+  const [lang, setLangState] = useState<Lang>('en')
+
+  useEffect(() => {
     const saved = localStorage.getItem('nutrientflow-lang')
-    return (saved === 'ko' ? 'ko' : 'en') as Lang
-  })
+    if (saved === 'ko' || saved === 'en') {
+      setLangState(saved)
+    }
+  }, [])
 
   const setLang = useCallback((l: Lang) => {
     setLangState(l)

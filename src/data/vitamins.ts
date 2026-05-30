@@ -4,6 +4,11 @@ export interface DetailedFoodSource {
   amount: string
 }
 
+export interface SourceCitation {
+  text: string
+  url: string
+}
+
 export interface Vitamin {
   id: string
   name: string
@@ -24,6 +29,7 @@ export interface Vitamin {
   deficiency: { name: string; symptoms: string[] }
   highRiskGroups: string[]
   funFact: string
+  sources?: SourceCitation[]
 }
 
 export const vitamins: Vitamin[] = [
@@ -143,6 +149,10 @@ export const vitamins: Vitamin[] = [
       'Those with limited sun exposure',
     ],
     funFact: 'Approximately 1 billion people worldwide have low vitamin D status, making it one of the most common nutritional deficiencies.',
+    sources: [
+      { text: 'NIH Office of Dietary Supplements — Vitamin D', url: 'https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/' },
+      { text: 'Holick MF. The vitamin D deficiency pandemic. Rev Endocr Metab Disord. 2017.', url: 'https://pubmed.ncbi.nlm.nih.gov/28555329/' },
+    ],
   },
   {
     id: 'vitamin-e',
@@ -201,6 +211,9 @@ export const vitamins: Vitamin[] = [
       'Those with Crohn\'s disease or cystic fibrosis',
     ],
     funFact: 'Synthetic vitamin E (dl-alpha-tocopherol) is only half as biologically active as natural vitamin E (d-alpha-tocopherol).',
+    sources: [
+      { text: 'NIH Office of Dietary Supplements — Vitamin E', url: 'https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/' },
+    ],
   },
   {
     id: 'vitamin-k',
@@ -427,6 +440,10 @@ export const vitamins: Vitamin[] = [
       'People with carcinoid syndrome',
     ],
     funFact: 'Pellagra killed more than 100,000 Americans between 1900 and 1940 before niacin fortification eliminated it.',
+    sources: [
+      { text: 'NIH Office of Dietary Supplements — Niacin', url: 'https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/' },
+      { text: 'Cleveland Clinic — Pellagra', url: 'https://my.clevelandclinic.org/health/diseases/22377-pellagra' },
+    ],
   },
   {
     id: 'vitamin-b5',
@@ -656,6 +673,10 @@ export const vitamins: Vitamin[] = [
       'Chronic alcoholics',
     ],
     funFact: 'Folic acid fortification of grains has reduced neural tube defect incidence by 20-50% in countries that mandate it.',
+    sources: [
+      { text: 'NIH Office of Dietary Supplements — Folate', url: 'https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/' },
+      { text: 'CDC — Folic Acid', url: 'https://www.cdc.gov/ncbddd/folicacid/index.html' },
+    ],
   },
   {
     id: 'vitamin-b12',
@@ -774,6 +795,10 @@ export const vitamins: Vitamin[] = [
       'Elderly individuals',
     ],
     funFact: 'Scurvy killed more than 2 million sailors between 1500 and 1800. British sailors got the nickname "limeys" from citrus juice rations.',
+    sources: [
+      { text: 'NIH Office of Dietary Supplements — Vitamin C', url: 'https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/' },
+      { text: 'Bartholomew M. James Lind and scurvy. BMJ. 2002.', url: 'https://pubmed.ncbi.nlm.nih.gov/12130572/' },
+    ],
   },
 ]
 
@@ -781,15 +806,8 @@ export function getVitaminById(id: string): Vitamin | undefined {
   return vitamins.find((v) => v.id === id)
 }
 
-export function getFatSolubleVitamins(): Vitamin[] {
-  return vitamins.filter((v) => v.category === 'fat-soluble')
-}
-
-export function getWaterSolubleVitamins(): Vitamin[] {
-  return vitamins.filter((v) => v.category === 'water-soluble')
-}
-
 /**
+
  * Parse a food amount string to a numeric value in mcg.
  * Handles formats like: '6,582 mcg', '1,403 mcg', '15 mg', 'Varies by skin type'
  * For Vitamin D IU: 1 IU = 0.025 mcg

@@ -1,8 +1,8 @@
-# NutrientFlow
+# ClearlyVitamins
 
 > Make informed decisions about vitamins and supplements — backed by science, built for real life.
 
-**Live Site:** https://maj5xu3am5ctg.kimi.page
+**Live Site:** https://vitamine-guide.web.app
 
 ---
 
@@ -21,7 +21,7 @@ The supplement industry is a $150+ billion market built largely on confusion. Wa
 
 ### The Mission
 
-NutrientFlow exists to cut through the noise. It provides:
+ClearlyVitamins exists to cut through the noise. It provides:
 - **Clear, science-backed information** about all 13 essential vitamins
 - **Personalized recommendations** based on age, gender, diet, lifestyle, and health conditions
 - **Bilingual support** (English/Korean) to serve a global audience
@@ -67,6 +67,13 @@ Detailed reference tables showing:
 - Serving sizes and vitamin amounts per serving
 - Cooking and storage tips to maximize nutrient retention
 
+### 5. Comparison Guides
+Side-by-side comparisons to answer common questions:
+- **Fat-Soluble vs. Water-Soluble Vitamins** — absorption, storage, toxicity risks
+- **Vitamin D2 vs. D3** — which form is more effective and why
+- **Vitamin B12 Forms** — cyanocobalamin vs. methylcobalamin vs. hydroxocobalamin
+- **Vegan Multivitamin Guide** — which nutrients matter most on a plant-based diet
+
 ---
 
 ## Technical Stack
@@ -75,37 +82,79 @@ Detailed reference tables showing:
 
 | Technology | Purpose | Why We Chose It |
 |---|---|---|
-| **React 19** | UI framework | Component-based architecture, massive ecosystem, excellent for interactive SPAs |
-| **TypeScript** | Type safety | Catches bugs at compile time, self-documenting code, essential for complex data models |
-| **Vite** | Build tool | Fast HMR, optimized production builds, native ESM support |
-| **Tailwind CSS** | Styling | Utility-first approach enables rapid iteration, consistent design system, minimal CSS bundle |
-| **shadcn/ui** | Component primitives | High-quality, accessible, customizable components without lock-in |
-| **GSAP** | Animations | Industry-standard animation library with ScrollTrigger for scroll-driven effects |
-| **React Router** | Client-side routing | Declarative routing, clean URL structure for 6+ pages |
+| **Next.js 15** | Framework | Static site generation (SSG) for SEO, fast pre-rendered HTML, file-system routing |
+| **React 19** | UI library | Component-based architecture, massive ecosystem |
+| **TypeScript** | Type safety | Catches bugs at compile time, self-documenting code |
+| **Tailwind CSS** | Styling | Utility-first approach, minimal CSS bundle, rapid iteration |
+| **GSAP** | Animations | Scroll-driven animations with ScrollTrigger |
+
+### Why Next.js SSG?
+
+The site was migrated from a Vite SPA to **Next.js with static export** for a critical reason: **AI and search engine visibility**.
+
+- **Pre-rendered HTML** — Every page is generated as static HTML at build time, so crawlers (including AI bots like GPTBot, ClaudeBot, and PerplexityBot) see full content without executing JavaScript.
+- **Meta tags per page** — Each of the 26+ routes has unique `<title>`, `<meta description>`, Open Graph, and Twitter Card tags.
+- **Structured data** — JSON-LD schemas (MedicalWebPage, FAQPage, HowTo, BreadcrumbList, Organization) are embedded directly in the HTML.
+- **robots.txt** — Explicitly allows AI crawlers to index all content.
+- **Sitemap** — Auto-generated `sitemap.xml` with all 25+ URLs.
 
 ### Project Structure
 
 ```
 src/
-├── pages/              # Page components (one per route)
-│   ├── Home.tsx        # Landing page with hero, stats, facts, classifications
-│   ├── VitaminsPage.tsx # Grid of all 13 vitamin cards
-│   ├── VitaminDetail.tsx # Individual vitamin deep-dive
-│   ├── DeficiencyPage.tsx # Historical deficiency diseases
-│   ├── FoodSourcesPage.tsx # Food reference tables
-│   └── SupplementGuide.tsx # Interactive recommendation quiz
+├── pages/                  # Next.js file-system routes
+│   ├── index.tsx           # Landing page
+│   ├── vitamins/
+│   │   ├── index.tsx       # Vitamin directory
+│   │   └── [id].tsx        # Dynamic vitamin detail pages
+│   ├── deficiencies/
+│   │   └── index.tsx       # Deficiency diseases
+│   ├── food-sources/
+│   │   └── index.tsx       # Food reference tables
+│   ├── supplement-guide/
+│   │   └── index.tsx       # Interactive recommendation quiz
+│   ├── fat-vs-water-soluble/
+│   │   └── index.tsx       # Comparison guide
+│   ├── vitamin-d2-vs-d3/
+│   │   └── index.tsx       # Comparison guide
+│   ├── vitamin-b12-forms/
+│   │   └── index.tsx       # Comparison guide
+│   ├── vegan-multivitamin-guide/
+│   │   └── index.tsx       # Comparison guide
+│   ├── privacy/
+│   │   └── index.tsx       # Privacy policy
+│   └── terms/
+│       └── index.tsx       # Terms of service
+├── page-components/        # Page UI components (imported by routes)
+│   ├── Home.tsx
+│   ├── VitaminsPage.tsx
+│   ├── VitaminDetail.tsx
+│   ├── DeficiencyPage.tsx
+│   ├── FoodSourcesPage.tsx
+│   ├── SupplementGuide.tsx
+│   ├── ComparisonFatWater.tsx
+│   ├── ComparisonD2D3.tsx
+│   ├── ComparisonB12Forms.tsx
+│   ├── GuideVeganMultivitamin.tsx
+│   ├── PrivacyPolicy.tsx
+│   └── TermsOfService.tsx
 ├── sections/
-│   └── Navigation.tsx  # Top nav with language toggle
+│   ├── Navigation.tsx      # Top nav with language toggle
+│   └── Footer.tsx
+├── components/
+│   ├── SEO.tsx             # Reusable meta tags + JSON-LD schema
+│   └── LastUpdated.tsx     # Review date display
 ├── data/
-│   ├── vitamins.ts     # Complete vitamin dataset (13 vitamins)
-│   ├── vitaminsKo.ts   # Korean translations for all vitamin data
+│   ├── vitamins.ts         # Complete vitamin dataset (13 vitamins)
+│   ├── vitaminsKo.ts       # Korean translations
 │   ├── supplementEngine.ts # Recommendation logic engine
-│   ├── supplementGuideKo.ts # Korean labels for the guide
-│   ├── deficienciesKo.ts    # Korean disease translations
-│   └── foodSourcesKo.ts     # Korean cooking tips
+│   ├── supplementGuideKo.ts
+│   ├── deficienciesKo.ts
+│   └── foodSourcesKo.ts
 ├── contexts/
-│   └── LanguageContext.tsx  # Global EN/KO language state
-└── App.tsx             # Route configuration
+│   └── LanguageContext.tsx # Global EN/KO language state
+└── lib/
+    └── seoSchema.ts        # Structured data helpers
 ```
 
 ### Key Design Decisions
@@ -116,7 +165,7 @@ src/
 
 **Data merging pattern** — English is the base dataset; Korean overlays specific fields. This avoids duplicating unchanged data (colors, IDs, numeric values) while keeping translations complete.
 
-**Static deployment** — The entire app builds to a static `dist/` folder deployable on any CDN or static host. No server required.
+**Static export** — `next.config.mjs` uses `output: 'export'` to generate a static `dist/` folder deployed to Firebase Hosting. Every route produces its own `index.html`.
 
 ---
 
@@ -150,6 +199,10 @@ interface Vitamin {
   }
   highRiskGroups: string[]
   funFact: string
+  sources?: {                  // Academic citations
+    text: string
+    url: string
+  }[]
 }
 ```
 
@@ -195,16 +248,18 @@ npm install
 # Start development server
 npm run dev
 
-# Build for production
+# Build for production (generates static export to dist/)
 npm run build
 
-# Preview production build
-npm run preview
+# Deploy to Firebase Hosting
+npm run deploy
 ```
+
+---
 
 ## Deployment
 
-The `dist/` folder is a static site ready for deployment on any static host (Vercel, Netlify, Cloudflare Pages, GitHub Pages, etc.).
+The `dist/` folder is a static site generated by Next.js and deployed to **Firebase Hosting**. The `firebase.json` config points to `dist/` with `cleanUrls: true`.
 
 ---
 
