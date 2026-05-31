@@ -52,7 +52,7 @@ export default function Footer() {
     <footer className="w-full" style={{ background: '#1a1a1a' }}>
       <div className="content-max px-6 pt-16 pb-10">
         {/* Main grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Column 1 — Legal */}
           <div>
             <h4
@@ -93,31 +93,15 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 2 — Connect */}
+          {/* Column 2 — Service */}
           <div>
             <h4
               className="text-[#fafaf8] font-medium mb-4"
               style={{ fontFamily: "'Geist Sans', sans-serif", fontSize: 14 }}
             >
-              {t('footer.connect.title')}
+              {t('footer.service.title')}
             </h4>
             <ul className="space-y-2.5">
-              <li>
-                <a
-                  href="https://jsong.ai-biz.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors duration-200 hover:text-[#fafaf8]"
-                  style={{
-                    fontFamily: "'Geist Mono', monospace",
-                    fontSize: 12,
-                    fontWeight: 400,
-                    color: 'rgba(250, 250, 248, 0.5)',
-                  }}
-                >
-                  {t('footer.connect.aboutMe')} ↗
-                </a>
-              </li>
               <li>
                 <a
                   href="https://www.clearlyreqs.com/"
@@ -166,10 +150,68 @@ export default function Footer() {
                   {lang === 'ko' ? "'AI 개발 가이드' 책" : "'AI Development Guide' Book"} ↗
                 </a>
               </li>
+              <li>
+                <a
+                  href={`https://buildwithai.clearlyreqs.com/${lang === 'ko' ? 'ko' : 'en'}/`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors duration-200 hover:text-[#fafaf8]"
+                  style={{
+                    fontFamily: "'Geist Mono', monospace",
+                    fontSize: 12,
+                    fontWeight: 400,
+                    color: 'rgba(250, 250, 248, 0.5)',
+                  }}
+                >
+                  {t('footer.service.buildWithAI')} ↗
+                </a>
+              </li>
             </ul>
           </div>
 
-          {/* Column 3 — About / Brand */}
+          {/* Column 3 — Contact */}
+          <div>
+            <h4
+              className="text-[#fafaf8] font-medium mb-4"
+              style={{ fontFamily: "'Geist Sans', sans-serif", fontSize: 14 }}
+            >
+              {t('footer.contact.title')}
+            </h4>
+            <ul className="space-y-2.5">
+              <li>
+                <a
+                  href="https://jsong.ai-biz.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors duration-200 hover:text-[#fafaf8]"
+                  style={{
+                    fontFamily: "'Geist Mono', monospace",
+                    fontSize: 12,
+                    fontWeight: 400,
+                    color: 'rgba(250, 250, 248, 0.5)',
+                  }}
+                >
+                  {t('footer.connect.aboutMe')} ↗
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:jsong@koreatous.com"
+                  className="transition-colors duration-200 hover:text-[#fafaf8]"
+                  style={{
+                    fontFamily: "'Geist Mono', monospace",
+                    fontSize: 12,
+                    fontWeight: 400,
+                    color: 'rgba(250, 250, 248, 0.5)',
+                  }}
+                >
+                  {t('footer.contact.contact')}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4 — About / Brand */}
           <div>
             <h4
               className="text-[#fafaf8] font-medium mb-4"
